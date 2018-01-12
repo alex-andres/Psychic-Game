@@ -10,32 +10,38 @@ $(document).ready(function(){
 	var losses = 0;
 	//declares variable for total amount of guesses to be stored, initializing it with a value of 10, giving the user 10 chances to guess the correct letter
 	var guessesLeft = 10;
-	//declares a variable for the random letter that will store value of letterRandomizerFunction.
+	//declares a variable for the random letter that will store value of letterRandomizer function.
 	var randomLetter;
 	//function that produces a random choice from the array of words
-	function letterRandomizerFunction() {
+	function letterRandomizer() {
 	  randomLetter = alphabet[Math.floor(Math.random() * 26)];
 	};
+	
+	//function that clears guessed letters from html
+	function lettersGuessedClear(){
+		$("#lettersGuessed").html('None')
+	}
 	//function that displays the user input from the arrayGuessedLetter in the lettersGuessed element
-	function lettersGuessedFunction() {
+	function lettersGuessed() {
 	  $("#lettersGuessed").html(arrayGuessedLetter.join(', '));
 	};
 	//function that displays the value from the guesses left variable in the guessesLeft element
-	function guessesLeftFunction() {
+	function guessesLeft() {
 	  $("#guessesLeft").html(guessesLeft);
 	};
 	//function that resets the value for guesses left, empties the arrayGuessedLetters array, and runs the contained functions
-	function resetFunction() {
-		letterRandomizerFunction();
-		lettersGuessedFunction();
-	  guessesLeftFunction();
+	function reset() {
+		letterRandomizer();
+		lettersGuessed();
+	  guessesLeft();
 
 	  guessesLeft = 10;
-	  arrayGuessedLetter = [];
+		arrayGuessedLetter = [];
+		lettersGuessedClear();
 	}
 	//calls each of the functions below
-	letterRandomizerFunction();
-	guessesLeftFunction();
+	letterRandomizer();
+	guessesLeft();
 
 	//function that receives user input and converts it from keycode to lower case alphabet
 	$(document).keyup(function(e) {
@@ -46,8 +52,8 @@ $(document).ready(function(){
 	  //pushes each guess variable to an array call arrayGuessedLetter
 	  arrayGuessedLetter.push(guess);
 	  //calls each of the functions below
-	  guessesLeftFunction();
-	  lettersGuessedFunction();
+	  guessesLeft();
+	  lettersGuessed();
 
 	  			//creates a condition if the guessesLeft variable value is higher than 0
 	        if (guessesLeft > 0){
@@ -57,7 +63,7 @@ $(document).ready(function(){
 	                //wins element updated in html
 										$("#wins").html(wins);
 									//reset function is run to restart the game
-	                resetFunction();
+	                reset();
 	            }
 	        //if the guesses left is equal to 0 then the losses variable is increased by one    
 	        }else if(guessesLeft === 0){
@@ -65,7 +71,7 @@ $(document).ready(function(){
 	            	//losses element is updated in html
 	            	$("#losses").html(losses);
 	            //reset function is run to restart the game	
-	            resetFunction();
+	            reset();
 	        }
 	});
 });
